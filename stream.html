@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Play M3U8 Stream</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+<body>
+  <video id="video" controls autoplay></video>
+  
+  <script>
+    if(Hls.isSupported()) {
+      var video = document.getElementById('video');
+      var hls = new Hls();
+      
+      hls.loadSource('https://live-hls-web-aje.getaj.net/AJE/05.m3u8');
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, function() {
+        video.play();
+      });
+    }
+    else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = 'https://live-hls-web-aje.getaj.net/AJE/05.m3u8';
+      video.addEventListener('loadedmetadata', function() {
+        video.play();
+      });
+    }
+  </script>
+</body>
+</html>
